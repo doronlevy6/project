@@ -1,0 +1,32 @@
+version: "3"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=mynewdb1
+      - POSTGRES_USER=newuser1
+      - POSTGRES_PASSWORD=newpassword1
+    ports:
+      - 5432:5432
+    volumes:
+      - ./database:/var/lib/postgresql/data
